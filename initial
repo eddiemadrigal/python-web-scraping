@@ -1,0 +1,20 @@
+import bs4, requests
+
+class URL(object):
+
+    def __init__(self, url):
+        self.url = url
+
+    def getDesc(self):
+        res = requests.get(self.url)
+        urlSoup = bs4.BeautifulSoup(res.text, "lxml")
+        description = urlSoup.find('meta', attrs={'name':'description'})
+        if description:
+            myDesc = description.get('content')
+        else:
+            myDesc = "No data found"
+        print(myDesc)
+
+
+google = URL('http://codex32.com')
+google.getDesc()
